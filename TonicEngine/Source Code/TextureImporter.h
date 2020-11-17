@@ -20,6 +20,9 @@ public:
 	update_status Update(float dt);
 	bool CleanUp();
 
+	//Save should Create a .dds file with devil and save it.
+	//create a load to read the dds file info.
+
 public:
 
 	uint CreateTexture(const void* texture, const char* path, uint width, uint height, int format, uint format2);

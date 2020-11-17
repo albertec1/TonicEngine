@@ -31,7 +31,7 @@ public:
 	void CreateLibraryDirectories();
 
 	// Utility functions
-	bool AddPath(const char* path_or_zip);
+	bool AddPath(const char* path_or_zip); //Ads a path for SDL to use
 	bool Exists(const char* file) const;
 	bool CreateDir(const char* dir);
 	bool IsDirectory(const char* file) const;

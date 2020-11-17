@@ -289,6 +289,7 @@ void ModuleFileSystem::SplitFilePath(const char* full_path, std::string* path, s
 	}
 }
 
+// Read a whole file and put it in a new buffer
 unsigned int ModuleFileSystem::Load(const char* path, const char* file, char** buffer) const
 {
 	std::string full_path(path);
@@ -345,6 +346,7 @@ bool ModuleFileSystem::DuplicateFile(const char* file, const char* dstFolder, st
 
 	return DuplicateFile(file, finalPath.c_str());
 }
+
 
 bool ModuleFileSystem::DuplicateFile(const char* srcFile, const char* dstFile)
 {
@@ -419,6 +421,7 @@ uint ModuleFileSystem::Save(const char* file, const void* buffer, unsigned int s
 	return ret;
 }
 
+//Removes files and directories(with all its contents)
 bool ModuleFileSystem::Remove(const char* file)
 {
 	bool ret = false;

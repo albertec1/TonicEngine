@@ -62,7 +62,7 @@ bool TextureImporter::CleanUp()
 
 uint TextureImporter::CreateEmptyTexture() const
 {
-	uint  texture;
+	uint texture;
 
 	return texture;
 }
