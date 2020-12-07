@@ -168,3 +168,13 @@ void ComponentMesh::IsMeshComponentActive(GameObject* go)
 	}
 		
 }
+
+const AABB& ComponentMesh::GetAABB() const
+{
+	return aabb;
+}
+
+const OBB& ComponentMesh::GetOBB() const
+{
+	return obb;
+}

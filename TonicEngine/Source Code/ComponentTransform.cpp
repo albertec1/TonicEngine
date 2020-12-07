@@ -5,6 +5,8 @@
 ComponentTransform::ComponentTransform(GameObject* gameObject) : Component(COMPONENT_TYPE::TRANSFORM, gameObject)
 {
 	type = COMPONENT_TYPE::TRANSFORM;
+
+	globalTransform = Quat::identity;	
 }
 
 ComponentTransform::~ComponentTransform()
@@ -51,4 +53,10 @@ void ComponentTransform::IsTransformComponentActive(GameObject* go)
 	{
 		LOG_C("ERROR: Transform Component is NOT active");
 	}
+}
+
+
+float4x4 ComponentTransform::GetGlobalTransform()const
+{
+	return globalTransform;
 }
