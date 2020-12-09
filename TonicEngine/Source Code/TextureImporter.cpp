@@ -63,9 +63,11 @@ bool TextureImporter::CleanUp()
 
 uint TextureImporter::CreateEmptyTexture() const
 {
-	uint texture;
-
-	
+	Texture tex;
+	tex.id = 0;
+	tex.width = 0;
+	tex.height = 0;
+	tex.path = "none";
 
 	return texture;
 }
@@ -160,17 +162,22 @@ void TextureImporter::CustomSave(const char* path)
 	ILuint size;
 	ILubyte* data;
 	char* buffer;
+	std::string name;
+
+	App->file_system->SplitFilePath(path, nullptr, &name, nullptr);
 
 	ilSetInteger(IL_DXTC_FORMAT, IL_DXT5);// To pick a specific DXT compression use
 	size = ilSaveL(IL_DDS, nullptr, 0); // Get the size of the data buffer
 
-	if (size > 0) {
+	if (size > 0) 
+	{
 		data = new ILubyte[size]; // allocate data buffer
 		if (ilSaveL(IL_DDS, data, size) > 0) // Save to buffer with the ilSaveIL function
 			buffer = (char*)data;
 
-		/*App->file_system->Save(buffer, )
-			RELEASE_ARRAY(data);*/
+		App->file_system->Save(buffer, data, size);
+		LOG_C("Custom save COMPLETED: exported %s.dds into disk", name.data());
+		RELEASE_ARRAY(data);
 	}
 }
 
