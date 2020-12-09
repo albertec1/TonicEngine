@@ -120,6 +120,11 @@ void MeshImporter::GenerateMesh(const char* Filename, uint tex)
 				}
 			}
 
+			
+			meshGO->aabb.SetNegativeInfinity();
+			meshGO->aabb.Enclose((float3*)meshGO->GetComponentMesh()->mData.vertex, meshGO->GetComponentMesh()->mData.num_vertex);
+			
+
 			// Import data to buffers
 			App->renderer3D->VertexBuffer(meshGO->GetComponentMesh()->mData.vertex, meshGO->GetComponentMesh()->mData.num_vertex, meshGO->GetComponentMesh()->mData.id_vertex);
 			App->renderer3D->IndexBuffer(meshGO->GetComponentMesh()->mData.index, meshGO->GetComponentMesh()->mData.num_index, meshGO->GetComponentMesh()->mData.id_index);

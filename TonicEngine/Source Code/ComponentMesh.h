@@ -40,6 +40,10 @@ public:
 
 	void IsMeshComponentActive(GameObject* go);
 
+	const AABB& GetAABB() const;
+	const OBB& GetOBB() const;
+
+
 public:
 
 	bool showFaceNormals = false;
@@ -50,6 +54,9 @@ public:
 
 	float vertexLenght = 1.0f;
 	Color vertexColor = Blue;
+
+	AABB aabb;
+	OBB obb;
 	
 	meshData mData;
 

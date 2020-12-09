@@ -65,6 +65,8 @@ uint TextureImporter::CreateEmptyTexture() const
 {
 	uint texture;
 
+	
+
 	return texture;
 }
 

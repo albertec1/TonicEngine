@@ -31,6 +31,8 @@ public:
 	void CleanUp();
 	void Draw();
 
+	void UpdateBoundingBoxes();
+	
 	void EnableGameObject();
 	void DisableGameObject();
 
@@ -50,6 +52,9 @@ public:
 
 	uint textureWidth = 1024;
 	uint textureHeight = 1024;
+
+	OBB obb;
+	AABB aabb;
 
 };
 

@@ -16,11 +16,14 @@ GameObject::~GameObject()
 
 void GameObject::Update()
 {
+	UpdateBoundingBoxes();
+
 	for (int i = 0; i < componentsList.size(); ++i)
 	{
 		if (componentsList[i]->active)
 			componentsList[i]->Update();
 	}
+	
 }
 
 void GameObject::CleanUp()
@@ -37,6 +40,20 @@ void GameObject::Draw()
 	for (int i = 0; i < componentsList.size(); ++i)
 	{
 		componentsList[i]->Draw();
+	}
+}
+
+void  GameObject::UpdateBoundingBoxes()
+{
+	ComponentMesh* mesh = this->GetComponentMesh();
+
+	if (mesh)
+	{
+		obb = mesh->GetAABB();
+		obb.Transform(this->GetComponentTransform()->GetGlobalTransform());
+
+		aabb.SetNegativeInfinity();
+		aabb.Enclose(obb);
 	}
 }
 
@@ -135,4 +152,6 @@ void GameObject::AssignNameToGO(const char* name)
 {
 	this->oData.GOname = name;
 }
+
+
 
