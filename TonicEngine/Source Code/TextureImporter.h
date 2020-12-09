@@ -20,8 +20,6 @@ public:
 	update_status Update(float dt);
 	bool CleanUp();
 
-	//Save should Create a .dds file with devil and save it.
-	//create a load to read the dds file info.
 
 public:
 
@@ -30,6 +28,11 @@ public:
 
 	uint GenerateTexture(const char* path);
 	void GenerateCheckersTexture();
+
+	//Saves with dds format an already loaded texure, then calls the fileSystem to store it in disk as a new file.
+	void CustomSave( const char* path);
+
+	void CustomLoad();
 
 	uint texture = 0;
 	uint checker_texture = 0;

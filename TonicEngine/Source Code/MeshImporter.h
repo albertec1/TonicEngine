@@ -18,7 +18,7 @@ public:
 	void GenerateMesh(const char* path, uint tex = 0);
 	string GetName(const char* path);
 
-	//Custom file format:
+	//TODO2 - Custom file format:
 	//Create a function named ImportMesh that calls all the necessary methods to load the mesh.
 	//It should store the header information (ammount of vertices, indices, etc...), 
 	//mesh array data, and other precalculated data into a buffer of some sort.

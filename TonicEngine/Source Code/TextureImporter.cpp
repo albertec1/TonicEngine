@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "ModuleGUI.h"
 #include "ModuleSceneIntro.h"
+#include "ModuleFileSystem.h"
 
 #include "glew/include/GL/glew.h"
 
@@ -112,6 +113,8 @@ uint TextureImporter::GenerateTexture(const char* path)
 			if (ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE))
 				t = CreateTexture(ilGetData(), path, ilGetInteger(IL_IMAGE_WIDTH), ilGetInteger(IL_IMAGE_HEIGHT), ilGetInteger(IL_IMAGE_FORMAT), ilGetInteger(IL_IMAGE_FORMAT));
 
+			CustomSave(path);
+
 			return t;
 		}
 		else
@@ -149,3 +152,31 @@ void TextureImporter::GenerateCheckersTexture()
 		0, GL_RGBA, GL_UNSIGNED_BYTE, checkImage);
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
+
+void TextureImporter::CustomSave(const char* path)
+{
+	ILuint size;
+	ILubyte* data;
+	char* buffer;
+
+	ilSetInteger(IL_DXTC_FORMAT, IL_DXT5);// To pick a specific DXT compression use
+	size = ilSaveL(IL_DDS, nullptr, 0); // Get the size of the data buffer
+
+	if (size > 0) {
+		data = new ILubyte[size]; // allocate data buffer
+		if (ilSaveL(IL_DDS, data, size) > 0) // Save to buffer with the ilSaveIL function
+			buffer = (char*)data;
+
+		/*App->file_system->Save(buffer, )
+			RELEASE_ARRAY(data);*/
+	}
+}
+
+//Structure:
+
+//Load the texture file using either devil or physfs(requires a file system)
+//Store while loading all the contents of the file in a char* buffer and its size.
+//
+//Import the loaded texture with ilLoadL
+//
+//CustomSave it with ilSaveL (DDS format)
