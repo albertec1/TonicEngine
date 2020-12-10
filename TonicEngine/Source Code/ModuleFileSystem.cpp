@@ -425,6 +425,20 @@ uint ModuleFileSystem::Save(const char* file, const void* buffer, unsigned int s
 	return ret;
 }
 
+bool ModuleFileSystem::CustomFileSave(const char* name, const void* buffer, uint size, const char* path, const char* prefix, const char* extension)
+{
+	char result[250];
+
+	sprintf_s(result, 250, "%s%s.%s", path, prefix, extension);
+	NormalizePath(result);
+	if (Save(result, buffer, size) > 0)
+	{
+		name = result;
+		return true;
+	}
+	return false;
+}
+
 //Removes files and directories(with all its contents)
 bool ModuleFileSystem::Remove(const char* file)
 {

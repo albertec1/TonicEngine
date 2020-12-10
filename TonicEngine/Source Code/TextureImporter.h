@@ -15,7 +15,6 @@ struct Texture
 class TextureImporter : public Module
 {
 public:
-
 	TextureImporter(Application* app, bool start_enabled = true);
 	~TextureImporter();
 

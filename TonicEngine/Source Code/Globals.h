@@ -19,7 +19,7 @@ void log(const char file[], int line, const char* format, ...);
 #define RADTODEG 57.295779513082320876f
 #define HAVE_M_PI
 #define TEXTURES_CUSTOM_FOLDER "/Library/Textures/"
-
+#define MESHES_CUSTOM_FOLDER "/Library/Meshes/"
 #define IM_NEWLINE "\r\n"
 
 // PCG (Random Number Generator) functions
