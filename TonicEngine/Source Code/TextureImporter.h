@@ -1,5 +1,4 @@
-#ifndef __TEXTURE_IMPORTER_H__
-#define __TEXTURE_IMPORTER_H__
+#pragma once
 
 #include "Globals.h"
 #include "Module.h"
@@ -7,6 +6,11 @@
 #define CHECKERS_WIDTH 128
 #define CHECKERS_HEIGHT 128
 
+struct Texture
+{
+	uint id, height, width;
+	std::string path;
+};
 
 class TextureImporter : public Module
 {
@@ -20,8 +24,6 @@ public:
 	update_status Update(float dt);
 	bool CleanUp();
 
-	//Save should Create a .dds file with devil and save it.
-	//create a load to read the dds file info.
 
 public:
 
@@ -31,9 +33,12 @@ public:
 	uint GenerateTexture(const char* path);
 	void GenerateCheckersTexture();
 
+	//Saves with dds format an already loaded texure, then calls the fileSystem to store it in disk as a new file.
+	void CustomSave(const char* path);
+
+	void CustomLoad();
+
 	uint texture = 0;
 	uint checker_texture = 0;
 
 };
-
-#endif

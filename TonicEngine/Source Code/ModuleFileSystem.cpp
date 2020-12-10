@@ -386,7 +386,11 @@ uint ModuleFileSystem::Save(const char* file, const void* buffer, unsigned int s
 {
 	unsigned int ret = 0;
 
-	bool overwrite = PHYSFS_exists(file) != 0;
+	//overwrite is activated if another file with the same name exists in the folder
+	bool overwrite = PHYSFS_exists(file) != 0; 
+	
+	//if append is true, the file is opened for appending or created if does not exist yet.
+	//if append is false, the file is opened for writing. This means the file is set to zero bytes if existed before, otherwise a new file is created.
 	PHYSFS_file* fs_file = (append) ? PHYSFS_openAppend(file) : PHYSFS_openWrite(file);
 
 	if (fs_file != nullptr)
