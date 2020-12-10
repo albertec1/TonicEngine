@@ -1,6 +1,7 @@
 #ifndef __Application__
 #define __Application__
 
+
 #include "Globals.h"
 #include "Timer.h"
 #include "Module.h"
@@ -25,6 +26,8 @@ class ModuleGUI;
 class MeshImporter;
 class ModuleFileSystem;
 class TextureImporter;
+
+
 
 class Application
 {

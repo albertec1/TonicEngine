@@ -7,6 +7,8 @@
 #include "ModuleGUI.h"
 #include "ModuleCamera3D.h"
 #include "GameObject.h"
+#include "Gizmos.h"
+
 
 #include "SDL\include\SDL_opengl.h"
 #include <gl/GL.h>
@@ -138,11 +140,23 @@ update_status ModuleRenderer3D::PreUpdate(float dt)
 // PostUpdate present buffer to screen
 update_status ModuleRenderer3D::PostUpdate(float dt)
 {
+	
 	App->scene_intro->Draw();
+	
+	std::vector<const GameObject*> objs;
 
+	DrawBB();
+
+	/*for (int i = 0; i < objs.size(); i++)
+	{
+		if (objs[i]->oData.active)
+		{
+			objs[i]->Draw();
+		}
+	}*/
 	// Drawing Panels
 	App->gui->Draw();
-
+	
 	SDL_GL_SwapWindow(App->window->window);
 
 
@@ -282,3 +296,35 @@ void ModuleRenderer3D::Texture2DView(bool active)
 	else
 		glDisable(GL_TEXTURE_2D);
 }
+
+void ModuleRenderer3D::CreateAABB(const AABB& box, const Color& color)
+{
+	aabb.push_back(RenderBox<AABB>(&box, color));
+}
+
+void ModuleRenderer3D::CreateOBB(const OBB& box, const Color& color)
+{
+	obb.push_back(RenderBox<OBB>(&box, color));
+}
+
+void ModuleRenderer3D::DrawBB()
+{
+	glDisable(GL_LIGHTING);
+	glBegin(GL_LINES);
+
+	for (uint i = 0; i < aabb.size(); i++)
+	{
+		Gizmos::DrawWireBox(*aabb[i].box, aabb[i].color);
+	}
+	aabb.clear();
+
+	for (uint i = 0; i < obb.size(); i++)
+	{
+		Gizmos::DrawWireBox(*obb[i].box, obb[i].color);
+	}
+	obb.clear();
+
+	glEnd();
+	glEnable(GL_LIGHTING);
+}
+

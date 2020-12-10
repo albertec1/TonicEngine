@@ -29,12 +29,12 @@ public:
 
 	void Update();
 	void CleanUp();
-	void Draw();
+	void Draw() const;
 
 	void UpdateBoundingBoxes();
-	
 	void EnableGameObject();
 	void DisableGameObject();
+	void DrawBB(bool drawBB);
 
 	Component* CreateComponent(COMPONENT_TYPE type, bool active = true);
 	Component* GetComponent(const COMPONENT_TYPE& type);
@@ -42,6 +42,7 @@ public:
 	ComponentTransform* GetComponentTransform();
 	ComponentMesh* GetComponentMesh();
 	ComponentTexture* GetComponentTexture();
+	
 
 public:
 	objData oData;

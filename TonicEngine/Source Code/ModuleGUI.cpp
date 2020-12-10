@@ -186,6 +186,10 @@ bool ModuleGUI::Draw()
 				ImGui::EndMenu();
 			}
 
+			ImGui::Separator();
+
+			ImGui::MenuItem("Draw Bounding Boxes", nullptr, &App->scene_intro->drawBB);
+			
 			ImGui::EndMenu();
 		}
 

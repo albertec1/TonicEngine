@@ -53,6 +53,7 @@ public:
 
 	uint texture = -1;
 
+	bool drawBB = false;
 	bool drawGrid = true;
 	Color gridColor = White;
 	float gridSize = 1.0f;

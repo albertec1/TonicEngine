@@ -364,6 +364,9 @@
     <ClInclude Include="Source Code\Libraries\MathGeoLib\include\Math\TransformOps.h">
       <Filter>Sources\Libraries\MathGeoLib\Math</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\Gizmos.h">
+      <Filter>Sources\Containers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\ComponentMesh.cpp">
@@ -563,6 +566,9 @@
     </ClCompile>
     <ClCompile Include="Source Code\Libraries\MathGeoLib\include\Math\TransformOps.cpp">
       <Filter>Sources\Libraries\MathGeoLib\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\Gizmos.cpp">
+      <Filter>Sources\Containers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

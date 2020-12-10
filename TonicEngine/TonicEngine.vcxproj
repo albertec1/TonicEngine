@@ -94,6 +94,7 @@
     <ClInclude Include="Source Code\ComponentTexture.h" />
     <ClInclude Include="Source Code\ComponentTransform.h" />
     <ClInclude Include="Source Code\GameObject.h" />
+    <ClInclude Include="Source Code\Gizmos.h" />
     <ClInclude Include="Source Code\Libraries\glew\include\GL\glew.h" />
     <ClInclude Include="Source Code\glmath.h" />
     <ClInclude Include="Source Code\Globals.h" />
@@ -198,6 +199,7 @@
     <ClCompile Include="Source Code\ComponentTexture.cpp" />
     <ClCompile Include="Source Code\ComponentTransform.cpp" />
     <ClCompile Include="Source Code\GameObject.cpp" />
+    <ClCompile Include="Source Code\Gizmos.cpp" />
     <ClCompile Include="Source Code\Libraries\glew\src\glew.c" />
     <ClCompile Include="Source Code\glmath.cpp" />
     <ClCompile Include="Source Code\Libraries\imgui-1.78\imgui.cpp" />

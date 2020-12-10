@@ -73,7 +73,10 @@ update_status ModuleSceneIntro::Update(float dt)
 	for (int i = 0; i < gameobjectsList.size(); ++i)
 	{
 		gameobjectsList[i]->Update();
+		if (gameobjectsList[i]->oData.GOname != "root");
+		((GameObject*)gameobjectsList[i])->DrawBB(drawBB);
 	}
+
 
 	return UPDATE_CONTINUE;
 }

@@ -1,6 +1,9 @@
 #include "GameObject.h"
+#include "ModuleRenderer3D.h"
 #include "ModuleGUI.h"
 #include "Component.h"
+#include "ModuleSceneIntro.h"
+
 
 GameObject::GameObject(std::string name)
 {
@@ -16,13 +19,14 @@ GameObject::~GameObject()
 
 void GameObject::Update()
 {
-	UpdateBoundingBoxes();
+	
 
 	for (int i = 0; i < componentsList.size(); ++i)
 	{
 		if (componentsList[i]->active)
 			componentsList[i]->Update();
 	}
+
 	
 }
 
@@ -35,7 +39,7 @@ void GameObject::CleanUp()
 	}
 }
 
-void GameObject::Draw()
+void GameObject::Draw() const
 {
 	for (int i = 0; i < componentsList.size(); ++i)
 	{
@@ -55,6 +59,7 @@ void  GameObject::UpdateBoundingBoxes()
 		aabb.SetNegativeInfinity();
 		aabb.Enclose(obb);
 	}
+
 }
 
 void GameObject::EnableGameObject()
@@ -82,6 +87,7 @@ Component* GameObject::CreateComponent(COMPONENT_TYPE type, bool active)
 	case COMPONENT_TYPE::MESH:
 		component = new ComponentMesh(this);
 		LOG_C("Component mesh added to the list");
+		UpdateBoundingBoxes();
 		break;
 	case COMPONENT_TYPE::TEXTURE:
 		component = new ComponentTexture(this);
@@ -151,6 +157,17 @@ ComponentTexture* GameObject::GetComponentTexture()
 void GameObject::AssignNameToGO(const char* name)
 {
 	this->oData.GOname = name;
+}
+
+
+void GameObject::DrawBB(bool drawBB)
+{
+		if (drawBB)
+		{
+			App->renderer3D->CreateAABB(aabb, Green);
+			App->renderer3D->CreateOBB(obb, Pink);
+		}
+
 }
 
 
