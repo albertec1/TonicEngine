@@ -95,6 +95,7 @@
     <ClInclude Include="Source Code\ComponentTransform.h" />
     <ClInclude Include="Source Code\GameObject.h" />
     <ClInclude Include="Source Code\Gizmos.h" />
+    <ClInclude Include="Source Code\ModuleResources.h" />
     <ClInclude Include="Source Code\ResourceMesh.h" />
     <ClInclude Include="Source Code\ResourceTexture.h" />
     <ClInclude Include="Source Code\Libraries\glew\include\GL\glew.h" />
@@ -263,6 +264,7 @@
     <ClCompile Include="Source Code\ResourceMesh.cpp" />
     <ClCompile Include="Source Code\Resources.cpp" />
     <ClCompile Include="Source Code\ResourceTexture.cpp" />
+    <ClCompile Include="Source Code\ModuleResources.cpp" />
     <ClCompile Include="Source Code\TextureImporter.cpp" />
     <ClCompile Include="Source Code\Timer.cpp" />
   </ItemGroup>

@@ -182,7 +182,7 @@ bool MeshImporter::CustomSave(const char* name, Mesh* mesh_values, const char* b
 	ret = App->file_system->CustomFileSave(buffer, fileBuffer, size, MESHES_CUSTOM_FOLDER, name, "cmesh");
 	return ret;
 	if (!ret)
-		LOG_C("Failed exporting %s.tmesh into Library/Meshes floder", name);
+		LOG_C("Failed exporting %s.cmesh into Library/Meshes floder", name);
 
 	delete[] fileBuffer;
 	fileBuffer = nullptr;
@@ -190,14 +190,52 @@ bool MeshImporter::CustomSave(const char* name, Mesh* mesh_values, const char* b
 
 }
 
-bool MeshImporter::CustomLoad(const char* own_buffer, Mesh* mesh_values)
+bool MeshImporter::CustomLoad(char* own_buffer, Mesh* mesh_values)
 {
 	bool ret = false;
 
+	char* cursor = own_buffer;
+
+	uint ranges[4];
+	uint bytes = sizeof(ranges);
+	memcpy(ranges, cursor, bytes);
+
+	mesh_values->num_index = ranges[0];
+	mesh_values->num_vertex = ranges[1];
+	mesh_values->num_normals = ranges[2];
+	mesh_values->num_tex_coords = ranges[3];
+
+	cursor += bytes;
+	bytes = sizeof(uint) * mesh_values->num_index;
+	mesh_values->index = new uint[mesh_values->num_index];
+	memcpy(mesh_values->index, cursor, bytes);
+
+	cursor += bytes;
+	bytes = sizeof(float) * mesh_values->num_vertex * 3;
+	mesh_values->vertex = new float3[mesh_values->num_vertex];
+	memcpy(mesh_values->vertex, cursor, bytes);
+
+	cursor += bytes;
+	bytes = sizeof(float) * mesh_values->num_normals * 3;
+	mesh_values->normals = new float3[mesh_values->num_normals];
+	memcpy(mesh_values->normals, cursor, bytes);
+
+	cursor += bytes;
+	bytes = sizeof(float) * mesh_values->num_tex_coords * 2;
+	mesh_values->tex_coords = new float[mesh_values->num_tex_coords * 2];
+	memcpy(mesh_values->tex_coords, cursor, bytes);
+
+	// Generate buffers with all mesh info
+	App->renderer3D->VertexBuffer(mesh_values->vertex, mesh_values->num_vertex, mesh_values->vertex_ID);
+	App->renderer3D->IndexBuffer(mesh_values->index, mesh_values->num_index, mesh_values->index_ID);
+	App->renderer3D->TextureBuffer(mesh_values->tex_coords, mesh_values->num_tex_coords, mesh_values->tex_coords_ID);
+
+	RELEASE_ARRAY(own_buffer);
+	cursor = nullptr;
+
+	ret = true;
 	return ret;
 }
-
-
 
 string MeshImporter::GetName(const char* path)
 {

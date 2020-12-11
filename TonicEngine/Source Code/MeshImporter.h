@@ -44,9 +44,9 @@ public:
 	//ImportMesh must create a cursor and move it while storing things into the array to keep track of the position where it has to save data.
 	//Once the data is stored into the buffer, ImportMesh should save and return it.
 	bool CustomSave(const char* name, Mesh* mesh_values , const char* buffer);
-
+	
 	//create the function load to read the information out of the custom file.
-	bool CustomLoad(const char* own_buffer, Mesh* mesh_values);
+	bool CustomLoad(char* own_buffer, Mesh* mesh_values);
 public:
 
 	bool active = true;

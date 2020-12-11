@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Globals.h"
-#include "Application.h"ç
+#include "Application.h"
 
 enum class RESOURCES_TYPE
 {

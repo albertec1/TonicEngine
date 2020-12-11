@@ -8,6 +8,9 @@
 
 class ResourceMesh : public Resource
 {
+public:
+	ResourceMesh();
+	~ResourceMesh();
 
 //Mesh
 };
