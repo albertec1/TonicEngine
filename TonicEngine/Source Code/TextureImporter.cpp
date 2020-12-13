@@ -175,8 +175,7 @@ void TextureImporter::CustomSave(const char* path, char** buffer)
 		data = new ILubyte[size]; // allocate data buffer
 		if (ilSaveL(IL_DDS, data, size) > 0) // Save to buffer with the ilSaveIL function
 		{
-			ret = App->file_system->CustomFileSave(output_file, data, size, MESHES_CUSTOM_FOLDER, name.data(), "dds");
-			//ret = App->file_system->CustomFileSave(output_file, data, size, TEXTURES_CUSTOM_FOLDER, name.data(), "dds");
+			ret = App->file_system->CustomFileSave(output_file, data, size, TEXTURES_CUSTOM_FOLDER, name.data(), "dds");
 		}
 
 		if (!ret)

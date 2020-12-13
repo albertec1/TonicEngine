@@ -15,14 +15,16 @@ public:
 	void Draw();
 	float4x4 GetGlobalTransform()const;
 	void IsTransformComponentActive(GameObject* go);
+	void UpdateLocalTransform();
 
 public:
-	vec3 position;
-	vec3 rotation;
-	vec3 scale;
+	float3 position;
+	Quat rotation;
+	float3 scale;
 
 private:
 	float4x4 globalTransform;
+	float4x4 localTransform;
 };
 
 #endif

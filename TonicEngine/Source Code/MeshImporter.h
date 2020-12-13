@@ -10,18 +10,23 @@ struct Mesh
 	uint index_ID = 0;
 	uint num_index = 0;
 	uint* index = nullptr;
+
 	//vertex
 	uint vertex_ID = 0;
 	uint num_vertex = 0;
 	float3* vertex = nullptr;
+
 	//texcoords
 	uint tex_coords_ID = 0;
 	uint num_tex_coords = 0;
 	float* tex_coords = nullptr;
+
 	//normals
 	uint normals_ID = 0;
 	uint num_normals = 0;
 	float3* normals = nullptr;
+
+	string path;
 };
 
 class MeshImporter : public Module

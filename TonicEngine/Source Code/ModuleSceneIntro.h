@@ -50,7 +50,7 @@ public:
 	std::vector<GameObject*> gameobjectsList;
 
 	GameObject* GOselected = nullptr;
-
+	GameObject* rootGO = nullptr;
 	uint texture = -1;
 
 	bool drawBB = false;

@@ -55,6 +55,11 @@ void ComponentTransform::IsTransformComponentActive(GameObject* go)
 	}
 }
 
+void ComponentTransform::UpdateLocalTransform()
+{
+	localTransform = math::float4x4::FromTRS()
+}
+
 
 float4x4 ComponentTransform::GetGlobalTransform()const
 {

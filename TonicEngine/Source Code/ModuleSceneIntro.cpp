@@ -29,10 +29,12 @@ bool ModuleSceneIntro::Start()
 
 	bool ret = true;
 
+	rootGO = CreateGO("root");
+
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));	
 
-	App->mesh_imp->GenerateMesh("Assets/BakerHouse.fbx");
+	App->mesh_imp->GenerateMesh("Assets/street/Street environment_V01.fbx");
 
 	texture = App->tex_imp->GenerateTexture("Assets/Baker_house.png");
 
@@ -40,8 +42,6 @@ bool ModuleSceneIntro::Start()
 
 	gameobjectsList.at(0)->GetComponentTexture()->texture = texture;
 	gameobjectsList.at(1)->GetComponentTexture()->texture = texture;
-
-	
 
 	return ret;
 }
@@ -76,7 +76,6 @@ update_status ModuleSceneIntro::Update(float dt)
 		if (gameobjectsList[i]->oData.GOname != "root");
 		((GameObject*)gameobjectsList[i])->DrawBB(drawBB);
 	}
-
 
 	return UPDATE_CONTINUE;
 }

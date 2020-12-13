@@ -60,35 +60,76 @@ void MeshImporter::GenerateMesh(const char* Filename, uint tex)
 {
 	const aiScene* scene = aiImportFile(Filename, aiProcessPreset_TargetRealtime_MaxQuality);
 
-
 	if (scene != nullptr && scene->HasMeshes()) // Loaded correctly
 	{
+		aiVector3D position, scaling;
+		aiQuaternion rotation;
+		
+		aiNode* root = scene->mRootNode;
+		root->mTransformation.Decompose(scaling, rotation, position);
+
+		float3 position2(position.x, position.y, position.z);
+		float3 scaling2(1, 1, 1);
+		Quat rotation2(rotation.x, rotation.y, rotation.z, rotation.w);
+
+		std::string root_name = root->mName.C_Str();
+		bool dummy = true;
+
+		while (dummy)
+		{
+			if (root_name.find("_$AssimpFbx$_") != std::string::npos && root->mNumChildren == 1)
+			{
+				root = root->mChildren[0];
+
+				root->mTransformation.Decompose(scaling, rotation, position);
+				position2 += float3(position.x, position.y, position.z);
+				scaling2 = float3(scaling2.x * scaling.x, scaling2.y * scaling.y, scaling2.z * scaling.z);
+				rotation2 = rotation2 * Quat(rotation.x, rotation.y, rotation.z, rotation.w);
+
+				root_name = root->mName.C_Str();
+				dummy = true;
+			}
+			else
+				dummy = false;
+		}
+
+		GameObject* meshGO = App->scene_intro->CreateGO(root_name);
+		ComponentTransform* transf = meshGO->GetComponentTransform();
+
+		transf->position = {position2.x, position2.y, position2.z};
+		transf->scale = {scaling2.x, scaling2.y, scaling2.z};
+		transf->rotation = {rotation2.x, rotation2.y, rotation2.z};
+
+		transf->UpdateLocalTransform();
+
+		obj->GetComponentTransform()->default_position = transf->position;
+		obj->GetComponentTransform()->default_rotation_e = transf->rotation_euler;
+		obj->GetComponentTransform()->default_rotation_q = transf->rotation_quaternion;
+		obj->GetComponentTransform()->default_scale = transf->scale;
 		// mNumMeshes iterates on mMeshes[]
 		for (int i = 0; i < scene->mNumMeshes; i++)
 		{
-			GameObject* meshGO = App->scene_intro->CreateGO(GetName(Filename));
-
 			aiMesh* mesh2 = scene->mMeshes[i];
 
 			// Gets path
-			meshGO->GetComponentMesh()->mData.path = Filename;
+			meshGO->GetComponentMesh()->mData->mesh_data.path = Filename;
 
 			// Vertices
-			meshGO->GetComponentMesh()->mData.num_vertex = mesh2->mNumVertices;
-			meshGO->GetComponentMesh()->mData.vertex = new float3[meshGO->GetComponentMesh()->mData.num_vertex];
+			meshGO->GetComponentMesh()->mData->mesh_data.num_vertex = mesh2->mNumVertices;
+			meshGO->GetComponentMesh()->mData->mesh_data.vertex = new float3[meshGO->GetComponentMesh()->mData->mesh_data. num_vertex];
 
 			for (uint i = 0; i < mesh2->mNumVertices; ++i)
 			{
-				meshGO->GetComponentMesh()->mData.vertex[i].x = mesh2->mVertices[i].x;
-				meshGO->GetComponentMesh()->mData.vertex[i].y = mesh2->mVertices[i].y;
-				meshGO->GetComponentMesh()->mData.vertex[i].z = mesh2->mVertices[i].z;
+				meshGO->GetComponentMesh()->mData->mesh_data.vertex[i].x = mesh2->mVertices[i].x;
+				meshGO->GetComponentMesh()->mData->mesh_data.vertex[i].y = mesh2->mVertices[i].y;
+				meshGO->GetComponentMesh()->mData->mesh_data.vertex[i].z = mesh2->mVertices[i].z;
 			}
 
 			// Faces
 			if (mesh2->HasFaces())
 			{
-				meshGO->GetComponentMesh()->mData.num_index = mesh2->mNumFaces * 3;
-				meshGO->GetComponentMesh()->mData.index = new uint[meshGO->GetComponentMesh()->mData.num_index];
+				meshGO->GetComponentMesh()->mData->mesh_data.num_index = mesh2->mNumFaces * 3;
+				meshGO->GetComponentMesh()->mData->mesh_data.index = new uint[meshGO->GetComponentMesh()->mData->mesh_data.num_index];
 
 				for (uint i = 0; i < mesh2->mNumFaces; ++i)
 				{
@@ -97,40 +138,41 @@ void MeshImporter::GenerateMesh(const char* Filename, uint tex)
 						LOG_C("ERROR: Geometry face with != 3 indices");
 					}
 					else
-						memcpy(&meshGO->GetComponentMesh()->mData.index[i * 3], mesh2->mFaces[i].mIndices, 3 * sizeof(uint));
+						memcpy(&meshGO->GetComponentMesh()->mData->mesh_data.index[i * 3], mesh2->mFaces[i].mIndices, 3 * sizeof(uint));
 				}
 			}
 
 			// Normals
 			if (mesh2->HasNormals())
 			{
-				meshGO->GetComponentMesh()->mData.normals = new float3[meshGO->GetComponentMesh()->mData.num_vertex];
-				memcpy(meshGO->GetComponentMesh()->mData.normals, mesh2->mNormals, sizeof(float3) * meshGO->GetComponentMesh()->mData.num_vertex);
+				meshGO->GetComponentMesh()->mData->mesh_data.normals = new float3[meshGO->GetComponentMesh()->mData->mesh_data.num_vertex];
+				memcpy(meshGO->GetComponentMesh()->mData->mesh_data.normals, mesh2->mNormals, sizeof(float3) * meshGO->GetComponentMesh()->mData->mesh_data.num_vertex);
 			}
 
 			// UVs
 			if (mesh2->HasTextureCoords(0))
 			{
-				meshGO->GetComponentMesh()->mData.num_tex_coords = meshGO->GetComponentMesh()->mData.num_vertex;
-				meshGO->GetComponentMesh()->mData.tex_coords = new float[meshGO->GetComponentMesh()->mData.num_tex_coords * 2];
+				meshGO->GetComponentMesh()->mData->mesh_data.num_tex_coords = meshGO->GetComponentMesh()->mData->mesh_data.num_vertex;
+				meshGO->GetComponentMesh()->mData->mesh_data.tex_coords = new float[meshGO->GetComponentMesh()->mData->mesh_data.num_tex_coords * 2];
 
-				for (int i = 0; i < meshGO->GetComponentMesh()->mData.num_tex_coords; ++i)
+				for (int i = 0; i < meshGO->GetComponentMesh()->mData->mesh_data.num_tex_coords; ++i)
 				{
-					meshGO->GetComponentMesh()->mData.tex_coords[i * 2] = mesh2->mTextureCoords[0][i].x;
-					meshGO->GetComponentMesh()->mData.tex_coords[(i * 2) + 1] = mesh2->mTextureCoords[0][i].y;
+					meshGO->GetComponentMesh()->mData->mesh_data.tex_coords[i * 2] = mesh2->mTextureCoords[0][i].x;
+					meshGO->GetComponentMesh()->mData->mesh_data.tex_coords[(i * 2) + 1] = mesh2->mTextureCoords[0][i].y;
 				}
 			}
 
 			
 			meshGO->aabb.SetNegativeInfinity();
-			meshGO->aabb.Enclose((float3*)meshGO->GetComponentMesh()->mData.vertex, meshGO->GetComponentMesh()->mData.num_vertex);
+			meshGO->aabb.Enclose((float3*)meshGO->GetComponentMesh()->mData->mesh_data.vertex, meshGO->GetComponentMesh()->mData->mesh_data.num_vertex);
 			
+			CustomSave(Filename, meshGO->GetComponentMesh()->mData->mesh_data,  );
 
 			// Import data to buffers
-			App->renderer3D->VertexBuffer(meshGO->GetComponentMesh()->mData.vertex, meshGO->GetComponentMesh()->mData.num_vertex, meshGO->GetComponentMesh()->mData.id_vertex);
-			App->renderer3D->IndexBuffer(meshGO->GetComponentMesh()->mData.index, meshGO->GetComponentMesh()->mData.num_index, meshGO->GetComponentMesh()->mData.id_index);
-			App->renderer3D->TextureBuffer(meshGO->GetComponentMesh()->mData.tex_coords, meshGO->GetComponentMesh()->mData.num_tex_coords, meshGO->GetComponentMesh()->mData.id_tex_coords);
-
+			App->renderer3D->VertexBuffer(meshGO->GetComponentMesh()->mData->mesh_data.vertex, meshGO->GetComponentMesh()->mData->mesh_data.num_vertex, meshGO->GetComponentMesh()->mData->mesh_data.vertex_ID);
+			App->renderer3D->IndexBuffer(meshGO->GetComponentMesh()->mData->mesh_data.index, meshGO->GetComponentMesh()->mData->mesh_data.num_index, meshGO->GetComponentMesh()->mData->mesh_data.index_ID);
+			App->renderer3D->TextureBuffer(meshGO->GetComponentMesh()->mData->mesh_data.tex_coords, meshGO->GetComponentMesh()->mData->mesh_data.num_tex_coords, meshGO->GetComponentMesh()->mData->mesh_data.tex_coords_ID);
+			
 			if (tex == 0 && Filename == "Assets/BakerHouse.fbx")
 				meshGO->GetComponentTexture()->texture = texture;
 

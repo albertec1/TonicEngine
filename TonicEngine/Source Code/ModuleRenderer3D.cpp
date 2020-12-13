@@ -219,7 +219,7 @@ void ModuleRenderer3D::GenerateObject(GameObject* GO)
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 
-	glBindBuffer(GL_ARRAY_BUFFER, GO->GetComponentMesh()->mData.id_vertex);
+	glBindBuffer(GL_ARRAY_BUFFER, GO->GetComponentMesh()->mData->mesh_data.vertex_ID);
 	glVertexPointer(3, GL_FLOAT, 0, NULL);
 
 	if (GO->GetComponentTexture()->active)
@@ -234,11 +234,11 @@ void ModuleRenderer3D::GenerateObject(GameObject* GO)
 
 	glActiveTexture(GL_TEXTURE0);
 	
-	glBindBuffer(GL_ARRAY_BUFFER, GO->GetComponentMesh()->mData.id_tex_coords);
+	glBindBuffer(GL_ARRAY_BUFFER, GO->GetComponentMesh()->mData->mesh_data.tex_coords_ID);
 	glTexCoordPointer(2, GL_FLOAT, 0, NULL);
 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, GO->GetComponentMesh()->mData.id_index);
-	glDrawElements(GL_TRIANGLES, GO->GetComponentMesh()->mData.num_index, GL_UNSIGNED_INT, nullptr);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, GO->GetComponentMesh()->mData->mesh_data.index_ID);
+	glDrawElements(GL_TRIANGLES, GO->GetComponentMesh()->mData->mesh_data.num_index, GL_UNSIGNED_INT, nullptr);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);

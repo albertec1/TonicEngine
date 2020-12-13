@@ -4,28 +4,9 @@
 #include "Component.h"
 #include "glmath.h"
 #include "Color.h"
+#include "ResourceMesh.h"
 
 class GameObject;
-
-struct meshData {
-	uint id_index = 0;
-	uint num_index = 0;
-	uint* index = nullptr;
-
-	uint id_vertex = 0;
-	uint num_vertex = 0;
-	float3* vertex = nullptr;
-
-	uint id_tex_coords = 0;
-	uint num_tex_coords = 0;
-	float* tex_coords = nullptr;
-
-	float3* normals = nullptr;
-
-	string path;
-
-	uint texture = 0;
-};
 
 class ComponentMesh : public Component
 {
@@ -58,8 +39,7 @@ public:
 	AABB aabb;
 	OBB obb;
 	
-	meshData mData;
-
+	ResourceMesh* mData = nullptr;
 };
 
 #endif
