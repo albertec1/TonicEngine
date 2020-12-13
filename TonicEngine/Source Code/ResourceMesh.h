@@ -12,5 +12,9 @@ public:
 	ResourceMesh();
 	~ResourceMesh();
 
-//Mesh
+	void LoadOnMemory();
+	void FreeMemory();
+
+	Mesh mesh_data;
+
 };

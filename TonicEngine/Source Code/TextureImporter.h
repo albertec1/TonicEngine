@@ -33,7 +33,7 @@ public:
 	void GenerateCheckersTexture();
 
 	//Saves with dds format an already loaded texure, then calls the fileSystem to store it in disk as a new file.
-	void CustomSave(const char* path);
+	void CustomSave(const char* path, char** buffer);
 
 	void CustomLoad(const char* path, Texture* tex);
 

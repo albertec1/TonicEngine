@@ -97,6 +97,7 @@
     <ClInclude Include="Source Code\Gizmos.h" />
     <ClInclude Include="Source Code\ModuleResources.h" />
     <ClInclude Include="Source Code\ResourceMesh.h" />
+    <ClInclude Include="Source Code\ResourceScene.h" />
     <ClInclude Include="Source Code\ResourceTexture.h" />
     <ClInclude Include="Source Code\Libraries\glew\include\GL\glew.h" />
     <ClInclude Include="Source Code\glmath.h" />
@@ -263,6 +264,7 @@
     <ClCompile Include="Source Code\RandomNumGenerator.cpp" />
     <ClCompile Include="Source Code\ResourceMesh.cpp" />
     <ClCompile Include="Source Code\Resources.cpp" />
+    <ClCompile Include="Source Code\ResourceScene.cpp" />
     <ClCompile Include="Source Code\ResourceTexture.cpp" />
     <ClCompile Include="Source Code\ModuleResources.cpp" />
     <ClCompile Include="Source Code\TextureImporter.cpp" />

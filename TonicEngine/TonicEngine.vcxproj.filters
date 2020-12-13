@@ -382,6 +382,9 @@
     <ClInclude Include="Source Code\ModuleResources.h">
       <Filter>Sources\Modules\Resources</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\ResourceScene.h">
+      <Filter>Sources\Modules\Resources</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source Code\ComponentMesh.cpp">
@@ -592,6 +595,9 @@
       <Filter>Sources\Modules\Resources</Filter>
     </ClCompile>
     <ClCompile Include="Source Code\ResourceMesh.cpp">
+      <Filter>Sources\Modules\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\ResourceScene.cpp">
       <Filter>Sources\Modules\Resources</Filter>
     </ClCompile>
     <ClCompile Include="Source Code\ModuleResources.cpp">

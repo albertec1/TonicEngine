@@ -157,7 +157,7 @@ bool MeshImporter::CustomSave(const char* name, Mesh* mesh_values, const char* b
 
 	uint bytes = sizeof(ranges); // First store ranges
 	memcpy(cursor, ranges, bytes);
-	cursor += bytes;
+	cursor += bytes; 
 
 	// Store indices
 	bytes = sizeof(uint) * mesh_values->num_index;
@@ -180,21 +180,22 @@ bool MeshImporter::CustomSave(const char* name, Mesh* mesh_values, const char* b
 	cursor += bytes;
 
 	ret = App->file_system->CustomFileSave(buffer, fileBuffer, size, MESHES_CUSTOM_FOLDER, name, "cmesh");
-	return ret;
+
 	if (!ret)
+	{
 		LOG_C("Failed exporting %s.cmesh into Library/Meshes floder", name);
+	}
 
 	delete[] fileBuffer;
 	fileBuffer = nullptr;
 	cursor = nullptr;
-
+	return ret;
 }
 
-bool MeshImporter::CustomLoad(char* own_buffer, Mesh* mesh_values)
+bool MeshImporter::CustomLoad(const char* own_buffer, Mesh* mesh_values)
 {
 	bool ret = false;
-
-	char* cursor = own_buffer;
+	const char* cursor = own_buffer;
 
 	uint ranges[4];
 	uint bytes = sizeof(ranges);

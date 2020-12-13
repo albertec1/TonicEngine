@@ -13,8 +13,6 @@ enum class COMPONENT_TYPE
 	TEXTURE
 };
 
-
-
 class Component
 {
 public:
@@ -35,9 +33,5 @@ public:
 	GameObject* object = nullptr;
 
 };
-
-
-
-
 
 #endif

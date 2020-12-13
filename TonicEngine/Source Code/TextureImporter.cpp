@@ -104,7 +104,7 @@ uint TextureImporter::GenerateTexture(const char* path)
 	ILuint pic;
 	uint t;
 	uint info;
-	
+	char* buffer = nullptr;
 	if (path != nullptr)
 	{
 		ilGenImages(1, (GLuint*)&info);
@@ -117,7 +117,7 @@ uint TextureImporter::GenerateTexture(const char* path)
 			if (ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE))
 				t = CreateTexture(ilGetData(), path, ilGetInteger(IL_IMAGE_WIDTH), ilGetInteger(IL_IMAGE_HEIGHT), ilGetInteger(IL_IMAGE_FORMAT), ilGetInteger(IL_IMAGE_FORMAT));
 
-			CustomSave(path);
+			CustomSave(path, &buffer);
 
 			return t;
 		}
@@ -157,12 +157,12 @@ void TextureImporter::GenerateCheckersTexture()
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-void TextureImporter::CustomSave(const char* path)
+void TextureImporter::CustomSave(const char* path, char** buffer)
 {
+	bool ret = false;
 	ILuint size;
 	ILubyte* data;
-	char* buffer;
-	char* output_file;
+	char* output_file = nullptr;
 	std::string name;
 
 	App->file_system->SplitFilePath(path, nullptr, &name, nullptr);
@@ -175,14 +175,14 @@ void TextureImporter::CustomSave(const char* path)
 		data = new ILubyte[size]; // allocate data buffer
 		if (ilSaveL(IL_DDS, data, size) > 0) // Save to buffer with the ilSaveIL function
 		{
-			buffer = (char*)data;
+			std::string norm_path = App->file_system->NormalizePath(path);
+			ret = App->file_system->Save((name+".dds").c_str(), data, size);
+			//ret = App->file_system->CustomFileSave(output_file, data, size, TEXTURES_CUSTOM_FOLDER, name.data(), "dds");
 		}
 
-		bool ret = App->file_system->CustomFileSave(output_file, buffer, size, TEXTURES_CUSTOM_FOLDER, path, "dds"); //I am assuming that's ok
 		if (!ret)
 		{
-			LOG_C("Failed exporting %s.dds into Library/Textures floder", name);
-
+			LOG_C("Failed exporting %s.dds into Library/Textures floder", name.c_str());
 		}
 
 		RELEASE_ARRAY(data);

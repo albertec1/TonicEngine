@@ -7,19 +7,16 @@ enum class RESOURCES_TYPE
 {
 	UNKNOWN = -1,
 	TEXTURE,
-	MESH
+	MESH, 
+	SCENE
 };
 
 class Resource
 {
 public: 
-	Resource() {}
-	virtual ~Resource() {}
+	Resource(uint uuid, RESOURCES_TYPE type);
+	virtual ~Resource();
 
-	inline RESOURCES_TYPE GetType() const
-	{
-		return type;
-	}
 	inline uint GetUUID() const
 	{
 		return UUID;
@@ -32,10 +29,21 @@ public:
 	{
 		return library_file.c_str();
 	}
+	inline uint GetReferenceCount() const
+	{
+		return references;
+	}
+	RESOURCES_TYPE GetType() const;
+	bool IsLoadedToMemory() const;
+	bool LoadToMemory();
+	
+	//serialization
+	/*virtual void Save(Config& config) const;
+	virtual void Load(consw
+	t Config& config);
+	virtual bool LoadInMemory() = 0;*/
 
-	//serialization methods still missing
-
-private:
+public:
 	uint UUID = 0;
 	uint references = 0;
 	RESOURCES_TYPE type = RESOURCES_TYPE::UNKNOWN;

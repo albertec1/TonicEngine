@@ -46,7 +46,7 @@ public:
 	bool CustomSave(const char* name, Mesh* mesh_values , const char* buffer);
 	
 	//create the function load to read the information out of the custom file.
-	bool CustomLoad(char* own_buffer, Mesh* mesh_values);
+	bool CustomLoad(const char* own_buffer, Mesh* mesh_values);
 public:
 
 	bool active = true;

@@ -5,5 +5,12 @@
 
 class ResourceTexture : public Resource
 {
- //Texture
+public:
+	ResourceTexture();
+	~ResourceTexture();
+
+	void LoadOnMemory();
+	void FreeMemory();
+
+	Texture tex;
 };
