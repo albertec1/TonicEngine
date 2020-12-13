@@ -4,6 +4,7 @@
 #include "ModuleGUI.h"
 #include "GameObject.h"
 #include "ModuleSceneIntro.h"
+#include "ModuleFileSystem.h"
 
 
 #include "Assimp/include/cimport.h"
@@ -145,6 +146,97 @@ void MeshImporter::GenerateMesh(const char* Filename, uint tex)
 		LOG_C("ERROR: Cannot load scene %s", Filename);
 }
 
+bool MeshImporter::CustomSave(const char* name, Mesh* mesh_values, const char* buffer)
+{
+	bool ret = false;
+	uint ranges[4] = { mesh_values->num_index, mesh_values->num_vertex, mesh_values->num_normals, mesh_values->num_tex_coords };
+	uint size = sizeof(ranges) + sizeof(uint) * mesh_values->num_index + sizeof(float) * mesh_values->num_vertex * 3 + sizeof(float) * mesh_values->num_normals * 3 + sizeof(float) * mesh_values->num_tex_coords * 2;
+
+	char* fileBuffer = new char[size]; // Allocate
+	char* cursor = fileBuffer;
+
+	uint bytes = sizeof(ranges); // First store ranges
+	memcpy(cursor, ranges, bytes);
+	cursor += bytes;
+
+	// Store indices
+	bytes = sizeof(uint) * mesh_values->num_index;
+	memcpy(cursor, mesh_values->index, bytes);
+	cursor += bytes;
+	
+	//Store vertices
+	bytes = sizeof(uint) * mesh_values->num_vertex * 3;
+	memcpy(cursor, mesh_values->vertex, bytes);
+	cursor += bytes;
+
+	//Store normals
+	bytes = sizeof(uint) * mesh_values->num_normals * 3;
+	memcpy(cursor, mesh_values->normals, bytes);
+	cursor += bytes;
+
+	//Store texture coordinates
+	bytes = sizeof(uint) * mesh_values->num_tex_coords * 2;
+	memcpy(cursor, mesh_values->tex_coords, bytes);
+	cursor += bytes;
+
+	ret = App->file_system->CustomFileSave(buffer, fileBuffer, size, MESHES_CUSTOM_FOLDER, name, "cmesh");
+	return ret;
+	if (!ret)
+		LOG_C("Failed exporting %s.cmesh into Library/Meshes floder", name);
+
+	delete[] fileBuffer;
+	fileBuffer = nullptr;
+	cursor = nullptr;
+
+}
+
+bool MeshImporter::CustomLoad(char* own_buffer, Mesh* mesh_values)
+{
+	bool ret = false;
+
+	char* cursor = own_buffer;
+
+	uint ranges[4];
+	uint bytes = sizeof(ranges);
+	memcpy(ranges, cursor, bytes);
+
+	mesh_values->num_index = ranges[0];
+	mesh_values->num_vertex = ranges[1];
+	mesh_values->num_normals = ranges[2];
+	mesh_values->num_tex_coords = ranges[3];
+
+	cursor += bytes;
+	bytes = sizeof(uint) * mesh_values->num_index;
+	mesh_values->index = new uint[mesh_values->num_index];
+	memcpy(mesh_values->index, cursor, bytes);
+
+	cursor += bytes;
+	bytes = sizeof(float) * mesh_values->num_vertex * 3;
+	mesh_values->vertex = new float3[mesh_values->num_vertex];
+	memcpy(mesh_values->vertex, cursor, bytes);
+
+	cursor += bytes;
+	bytes = sizeof(float) * mesh_values->num_normals * 3;
+	mesh_values->normals = new float3[mesh_values->num_normals];
+	memcpy(mesh_values->normals, cursor, bytes);
+
+	cursor += bytes;
+	bytes = sizeof(float) * mesh_values->num_tex_coords * 2;
+	mesh_values->tex_coords = new float[mesh_values->num_tex_coords * 2];
+	memcpy(mesh_values->tex_coords, cursor, bytes);
+
+	// Generate buffers with all mesh info
+	App->renderer3D->VertexBuffer(mesh_values->vertex, mesh_values->num_vertex, mesh_values->vertex_ID);
+	App->renderer3D->IndexBuffer(mesh_values->index, mesh_values->num_index, mesh_values->index_ID);
+	App->renderer3D->TextureBuffer(mesh_values->tex_coords, mesh_values->num_tex_coords, mesh_values->tex_coords_ID);
+
+	RELEASE_ARRAY(own_buffer);
+	cursor = nullptr;
+
+	ret = true;
+	return ret;
+}
+
 string MeshImporter::GetName(const char* path)
 {
 	// Finding the last slash of the path
@@ -160,3 +252,4 @@ string MeshImporter::GetName(const char* path)
 	// Returns the name of the file
 	return stringWithPoint.substr(0, findPoint);
 }
+

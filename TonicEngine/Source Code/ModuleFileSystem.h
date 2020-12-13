@@ -57,6 +57,7 @@ public:
 	bool DuplicateFile(const char* srcFile, const char* dstFile);
 
 	unsigned int Save(const char* file, const void* buffer, unsigned int size, bool append = false) const;
+	bool CustomFileSave(const char* name, const void* buffer, uint size, const char* path, const char* prefix, const char* extension);
 	bool Remove(const char* file);
 
 	uint GetLastModTime(const char* filename);

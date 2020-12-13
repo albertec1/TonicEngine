@@ -162,6 +162,7 @@ void TextureImporter::CustomSave(const char* path)
 	ILuint size;
 	ILubyte* data;
 	char* buffer;
+	char* output_file;
 	std::string name;
 
 	App->file_system->SplitFilePath(path, nullptr, &name, nullptr);
@@ -173,14 +174,58 @@ void TextureImporter::CustomSave(const char* path)
 	{
 		data = new ILubyte[size]; // allocate data buffer
 		if (ilSaveL(IL_DDS, data, size) > 0) // Save to buffer with the ilSaveIL function
+		{
 			buffer = (char*)data;
+		}
 
-		App->file_system->Save(buffer, data, size);
-		LOG_C("Custom save COMPLETED: exported %s.dds into disk", name.data());
+		bool ret = App->file_system->CustomFileSave(output_file, buffer, size, TEXTURES_CUSTOM_FOLDER, path, "dds"); //I am assuming that's ok
+		if (!ret)
+		{
+			LOG_C("Failed exporting %s.dds into Library/Textures floder", name);
+
+		}
+
 		RELEASE_ARRAY(data);
+	}
+	else
+	{
+		LOG_C("Failed custom save operation filename: %s", name);
 	}
 }
 
+void TextureImporter::CustomLoad(const char* path, Texture* tex)
+{
+	ILuint pic;
+	uint t;
+	uint info;
+
+	if (path != nullptr)
+	{
+		ilGenImages(1, (GLuint*)&info);
+		ilBindImage(info);
+
+		if (ilLoadImage(path)) {
+
+			ILinfo image_info;
+			iluGetImageInfo(&image_info);
+
+			if (image_info.Origin == IL_ORIGIN_UPPER_LEFT)
+				iluFlipImage();
+
+			if (ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE))
+			{
+				tex->id = CreateTexture(ilGetData(), path, ilGetInteger(IL_IMAGE_WIDTH), ilGetInteger(IL_IMAGE_HEIGHT), ilGetInteger(IL_IMAGE_FORMAT), ilGetInteger(IL_IMAGE_FORMAT));
+				tex->height = ilGetInteger(IL_IMAGE_HEIGHT);
+				tex->width = ilGetInteger(IL_IMAGE_WIDTH);
+			}
+		}
+		else
+		{
+			ilDeleteImages(1, &pic);
+			LOG_C("Failed loading image: %s. Error: %s", iluErrorString(ilGetError()), path);
+		}
+	}
+}
 //Structure:
 
 //Load the texture file using either devil or physfs(requires a file system)

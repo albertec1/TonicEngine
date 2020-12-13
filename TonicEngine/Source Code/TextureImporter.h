@@ -15,7 +15,6 @@ struct Texture
 class TextureImporter : public Module
 {
 public:
-
 	TextureImporter(Application* app, bool start_enabled = true);
 	~TextureImporter();
 
@@ -36,7 +35,7 @@ public:
 	//Saves with dds format an already loaded texure, then calls the fileSystem to store it in disk as a new file.
 	void CustomSave(const char* path);
 
-	void CustomLoad();
+	void CustomLoad(const char* path, Texture* tex);
 
 	uint texture = 0;
 	uint checker_texture = 0;
