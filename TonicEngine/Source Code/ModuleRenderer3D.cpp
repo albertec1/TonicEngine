@@ -308,6 +308,11 @@ void ModuleRenderer3D::CreateOBB(const OBB& box, const Color& color)
 	obb.push_back(RenderBox<OBB>(&box, color));
 }
 
+void ModuleRenderer3D::CreateFrustum(const Frustum& box, const Color& color)
+{
+	frustum.push_back(RenderBox<Frustum>(&box, color));
+}
+
 void ModuleRenderer3D::DrawBB()
 {
 	glDisable(GL_LIGHTING);
