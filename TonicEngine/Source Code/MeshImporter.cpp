@@ -179,11 +179,15 @@ bool MeshImporter::CustomSave(const char* name, Mesh* mesh_values, const char* b
 	memcpy(cursor, mesh_values->tex_coords, bytes);
 	cursor += bytes;
 
-	ret = App->file_system->CustomFileSave(buffer, fileBuffer, size, MESHES_CUSTOM_FOLDER, name, "cmesh");
+	ret = App->file_system->CustomFileSave(buffer, fileBuffer, size, MESHES_CUSTOM_FOLDER, name, "mymesh");
 
 	if (!ret)
 	{
-		LOG_C("Failed exporting %s.cmesh into Library/Meshes floder", name);
+		LOG_C("Failed exporting %s.mymesh into Library/Meshes floder", name);
+	}
+	else
+	{
+		LOG_C("Success: file %s.mymesh saved into %s", name, MESHES_CUSTOM_FOLDER);
 	}
 
 	delete[] fileBuffer;
@@ -196,6 +200,7 @@ bool MeshImporter::CustomLoad(const char* own_buffer, Mesh* mesh_values)
 {
 	bool ret = false;
 	const char* cursor = own_buffer;
+
 
 	uint ranges[4];
 	uint bytes = sizeof(ranges);

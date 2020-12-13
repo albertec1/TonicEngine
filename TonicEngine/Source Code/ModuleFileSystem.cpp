@@ -37,17 +37,23 @@ ModuleFileSystem::~ModuleFileSystem()
 // Called before render is available
 bool ModuleFileSystem::Init()
 {
+	const char* game_path;
 	LOG("Loading File System");
 	bool ret = true;
 
-	// Ask SDL for a write dir
-	char* write_path = SDL_GetPrefPath(App->GetOrgName(), App->GetAppName());
+	char* base_path = SDL_GetBasePath();
+	PHYSFS_init(base_path);
+	SDL_free(base_path);
 
-	// Trun this on while in game mode
-	if(PHYSFS_setWriteDir(write_path) == 0)
+	// workaround VS string directory mess
+	AddPath(".");
+
+	if (0 && game_path != nullptr)
+		AddPath(game_path);
+
+	// enable us to write in the game's dir area
+	if (PHYSFS_setWriteDir(".") == 0)
 		LOG("File System error while creating write dir: %s\n", PHYSFS_getLastError());
-
-	SDL_free(write_path);
 
 	return ret;
 }
