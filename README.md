@@ -1,6 +1,6 @@
-# TonicEngine
+# Cookie Engine (TonicEngine fork)
 
-[TonicEngine](https://github.com/xavimarin35/TonicEngine) is a 3D Game Engine developed in C & C++ made by Pol Casaú and Xavi Marín, students of [CITM](https://www.citm.upc.edu/) in Barcelona during our [Game Design and Development Bachelor's Degree](https://www.citm.upc.edu/cat/estudis/grau-videojocs-bcn/).
+[CookieEngine](https://github.com/albertec1/TonicEngine) Little engine developed for the subject of Game Engines (Design and Development of videogames -  CITM UPC Barcelona)
 
 ## Information
 
@@ -20,23 +20,19 @@
 * **Mouse Wheel Scroll**: Zoom in / Zoom out.
 * **Mouse Wheel Drag**: Move camera through the actual axis.
 
-### Extra Features
-
-* **Docking** functionality
-* **Create** and **Remove** Game Objects
-* **Debug** Menu
-* Camera **sensitivity** options
-* Console **auto scroll**
-
-## Usage
-
-### Installation
-
-Download the zip file and unzip it. Open the folder, execute the .exe and enjoy Tonic Engine!
-
-IMPORTANT: *Do not modify, change or add any folder or file (unless specified) as you might not be able to execute the application.*
-
 ## Authors
+
+### Alex López
+
+- Github: [AlexLA99](https://github.com/AlexLA99)
+	
+### Albert Espinosa
+
+- Github: [albertec1](https://github.com/albertec1)
+
+## Original Engine
+
+[TonicEngine](https://github.com/xavimarin35/TonicEngine)
 
 ### Pol Casaú
 
@@ -48,18 +44,7 @@ IMPORTANT: *Do not modify, change or add any folder or file (unless specified) a
 - Github: [XaviMarin35](https://github.com/xavimarin35)
 - LinkedIn: [Xavi Marín](https://www.linkedin.com/in/xavi-marin-sola/)
 
-## Contact
-
- Don't hesitate to visit:
- - Our repository: https://github.com/xavimarin35/TonicEngine 
- 
- Or contact us:
- - Pol Casau: pccpolcasau@gmail.com
- - Xavi Marín: xmarin98@gmail.com
- 
-  
 ## Third Party Libraries
-
 * [SDL](https://www.libsdl.org/)
 * [OpenGL](https://www.opengl.org/)
 * [ImGui](https://github.com/ocornut/imgui)
