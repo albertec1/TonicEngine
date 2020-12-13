@@ -44,11 +44,11 @@ bool PanelAbout::Draw()
 			if (ImGui::TreeNodeEx("Github Links", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_SpanAvailWidth))
 			{
 				if (ImGui::Button("Repository"))
-					App->RequestBrowser("https://github.com/xavimarin35/TonicEngine"); ImGui::SameLine();
-				if (ImGui::Button("Pol Casau"))
-					App->RequestBrowser("https://github.com/Bullseye14"); ImGui::SameLine();
-				if (ImGui::Button("Xavi Marin"))
-					App->RequestBrowser("https://github.com/xavimarin35");
+					App->RequestBrowser("https://github.com/albertec1/TonicEngine"); ImGui::SameLine();
+				if (ImGui::Button("Albert Espinosa"))
+					App->RequestBrowser("https://github.com/albertec1"); ImGui::SameLine();
+				if (ImGui::Button("Alex Lopez"))
+					App->RequestBrowser("https://github.com/AlexLA99");
 
 				ImGui::TreePop();
 			}

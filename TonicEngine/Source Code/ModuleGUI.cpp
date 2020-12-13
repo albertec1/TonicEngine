@@ -254,15 +254,11 @@ bool ModuleGUI::Draw()
 			ImGui::Separator();
 
 			if (ImGui::MenuItem("Documentation"))
-				App->RequestBrowser("https://github.com/xavimarin35/TonicEngine/blob/master/README.md");
+				App->RequestBrowser("https://github.com/albertec1/TonicEngine/blob/CookieEngine/README.md");
 
 			if (ImGui::MenuItem("Download Latest Version"))
-				App->RequestBrowser("https://github.com/xavimarin35/TonicEngine/releases");
+				App->RequestBrowser("https://github.com/albertec1/TonicEngine/releases");
 
-			ImGui::Separator();
-
-			if (ImGui::MenuItem("Report Bug"))
-				App->RequestBrowser("https://github.com/xavimarin35/TonicEngine/issues");
 
 			ImGui::EndMenu();
 		}
