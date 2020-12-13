@@ -154,6 +154,19 @@ ComponentTexture* GameObject::GetComponentTexture()
 	return (ComponentTexture*)texture;
 }
 
+ComponentCamera* GameObject::GetComponentCamera()
+{
+	Component* camera = nullptr;
+	for (std::vector<Component*>::iterator i = componentsList.begin(); i != componentsList.end(); i++)
+	{
+		if ((*i)->type == COMPONENT_TYPE::CAMERA)
+		{
+			return (ComponentCamera*)*i;
+		}
+	}
+	return (ComponentCamera*)camera;
+}
+
 void GameObject::AssignNameToGO(const char* name)
 {
 	this->oData.GOname = name;
@@ -162,11 +175,16 @@ void GameObject::AssignNameToGO(const char* name)
 
 void GameObject::DrawBB(bool drawBB)
 {
-		if (drawBB)
-		{
-			App->renderer3D->CreateAABB(aabb, Green);
-			App->renderer3D->CreateOBB(obb, Pink);
-		}
+	const ComponentCamera* camera = GetComponentCamera();
+	if (camera)
+	{
+		App->renderer3D->CreateFrustum(camera->frustum, Blue);
+	}
+	if (drawBB)
+	{
+		App->renderer3D->CreateAABB(aabb, Green);
+		App->renderer3D->CreateOBB(obb, Pink);
+	}
 
 }
 

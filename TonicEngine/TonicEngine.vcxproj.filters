@@ -370,6 +370,9 @@
     <ClInclude Include="Source Code\Gizmos.h">
       <Filter>Sources\Containers</Filter>
     </ClInclude>
+    <ClInclude Include="Source Code\ComponentCamera.h">
+      <Filter>Sources\GameObject\Components</Filter>
+    </ClInclude>
     <ClInclude Include="Source Code\Resources.h">
       <Filter>Sources\Modules\Resources</Filter>
     </ClInclude>
@@ -587,6 +590,9 @@
     </ClCompile>
     <ClCompile Include="Source Code\Gizmos.cpp">
       <Filter>Sources\Containers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source Code\ComponentCamera.cpp">
+      <Filter>Sources\GameObject\Components</Filter>
     </ClCompile>
     <ClCompile Include="Source Code\Resources.cpp">
       <Filter>Sources\Modules\Resources</Filter>

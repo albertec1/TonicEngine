@@ -6,6 +6,7 @@
 #include "ComponentTransform.h"
 #include "ComponentMesh.h"
 #include "ComponentTexture.h"
+#include "ComponentCamera.h"
 #include "ModuleInput.h"
 
 class ComponentTransform;
@@ -42,6 +43,7 @@ public:
 	ComponentTransform* GetComponentTransform();
 	ComponentMesh* GetComponentMesh();
 	ComponentTexture* GetComponentTexture();
+	ComponentCamera* GetComponentCamera();
 	
 
 public:

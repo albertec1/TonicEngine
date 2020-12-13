@@ -40,6 +40,7 @@ public:
 
 	void CreateAABB(const AABB& box, const Color& color);
 	void CreateOBB(const OBB& box, const Color& color);
+	void CreateFrustum(const Frustum& box, const Color& color);
 	void GenerateObject(GameObject* GO);
 
 	// View Mode
@@ -59,6 +60,7 @@ public:
 	mat4x4 ModelMatrix, ViewMatrix, ProjectionMatrix;
 	std::vector<RenderBox<AABB>> aabb;
 	std::vector<RenderBox<OBB>> obb;
+	std::vector<RenderBox<Frustum>> frustum;
 
 	Color bg_color = { 0.f, 0.f, 0.f };
 
