@@ -35,7 +35,7 @@ bool PanelAbout::Draw()
 		{
 			//ImGui::Image((void*)texIcon, ImVec2(35, 35), ImVec2(0, 1), ImVec2(1, 0)); ImGui::SameLine();
 			
-			ImGui::Text("%s by Pol Casau and Xavi Marin", SDL_GetWindowTitle(App->window->window));
+			ImGui::Text("%s by Alex Lopez and Albert Espinosa, forked from Tonic Engine (developed by Pol Casau and Xavi Marin)", SDL_GetWindowTitle(App->window->window));
 			ImGui::Separator();
 
 			ImGui::Text("This is a 3D Game Engine developed during our Game Design and Development Bachelor's Degree.");
@@ -82,7 +82,7 @@ bool PanelAbout::Draw()
 			ImGui::Separator();
 
 			ImGui::Text("MIT License");
-			ImGui::Text("Copyright (c) 2020 Xavi Marin Sola and Pol Casau Civit");
+			ImGui::Text("Copyright (c) 2020 Albert Espinosa Castillo and Alex Lopez Agudo");
 			ImGui::Text("Permission is hereby granted, free of charge, to any person obtaining a copy of this");
 			ImGui::Text("software and associated documentation files (the 'Software'), to deal in the Software without");
 			ImGui::Text("restriction, including without limitation the rights to use, copy, modify, merge, publish,");
