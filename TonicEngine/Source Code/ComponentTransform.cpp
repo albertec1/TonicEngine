@@ -57,7 +57,7 @@ void ComponentTransform::IsTransformComponentActive(GameObject* go)
 
 void ComponentTransform::UpdateLocalTransform()
 {
-	localTransform = math::float4x4::FromTRS()
+	localTransform = math::float4x4::FromTRS(position, rotation, scale);
 }
 
 

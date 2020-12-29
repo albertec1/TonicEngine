@@ -96,16 +96,15 @@ void MeshImporter::GenerateMesh(const char* Filename, uint tex)
 		GameObject* meshGO = App->scene_intro->CreateGO(root_name);
 		ComponentTransform* transf = meshGO->GetComponentTransform();
 
-		transf->position = {position2.x, position2.y, position2.z};
-		transf->scale = {scaling2.x, scaling2.y, scaling2.z};
-		transf->rotation = {rotation2.x, rotation2.y, rotation2.z};
+		transf->position = position2;
+		transf->scale = scaling2;
+		transf->rotation = rotation2;
 
 		transf->UpdateLocalTransform();
 
-		obj->GetComponentTransform()->default_position = transf->position;
-		obj->GetComponentTransform()->default_rotation_e = transf->rotation_euler;
-		obj->GetComponentTransform()->default_rotation_q = transf->rotation_quaternion;
-		obj->GetComponentTransform()->default_scale = transf->scale;
+		ResourceMesh* mesh = (ResourceMesh*)new Resource(RESOURCES_TYPE::MESH);
+		meshGO->GetComponentMesh()->mData = mesh;
+
 		// mNumMeshes iterates on mMeshes[]
 		for (int i = 0; i < scene->mNumMeshes; i++)
 		{
@@ -166,7 +165,8 @@ void MeshImporter::GenerateMesh(const char* Filename, uint tex)
 			meshGO->aabb.SetNegativeInfinity();
 			meshGO->aabb.Enclose((float3*)meshGO->GetComponentMesh()->mData->mesh_data.vertex, meshGO->GetComponentMesh()->mData->mesh_data.num_vertex);
 			
-			CustomSave(Filename, meshGO->GetComponentMesh()->mData->mesh_data,  );
+			Mesh* data = &(meshGO->GetComponentMesh()->mData->mesh_data);
+			CustomSave(Filename, data, meshGO->GetComponentMesh()->mData->assets_file.data());
 
 			// Import data to buffers
 			App->renderer3D->VertexBuffer(meshGO->GetComponentMesh()->mData->mesh_data.vertex, meshGO->GetComponentMesh()->mData->mesh_data.num_vertex, meshGO->GetComponentMesh()->mData->mesh_data.vertex_ID);

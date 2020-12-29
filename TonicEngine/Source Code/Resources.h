@@ -14,7 +14,7 @@ enum class RESOURCES_TYPE
 class Resource
 {
 public: 
-	Resource(uint uuid, RESOURCES_TYPE type);
+	Resource(RESOURCES_TYPE type);
 	virtual ~Resource();
 
 	inline uint GetUUID() const
@@ -37,11 +37,6 @@ public:
 	bool IsLoadedToMemory() const;
 	bool LoadToMemory();
 	
-	//serialization
-	/*virtual void Save(Config& config) const;
-	virtual void Load(consw
-	t Config& config);
-	virtual bool LoadInMemory() = 0;*/
 
 public:
 	uint UUID = 0;

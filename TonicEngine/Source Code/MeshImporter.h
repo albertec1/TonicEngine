@@ -26,7 +26,7 @@ struct Mesh
 	uint num_normals = 0;
 	float3* normals = nullptr;
 
-	string path;
+	std::string path = nullptr;
 };
 
 class MeshImporter : public Module
